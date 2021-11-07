@@ -1,0 +1,8 @@
+.carousel-item-ex > img{
+    height: 900px;
+    object-fit: cover;
+}
+
+.section {
+    margin: 60px 0;
+}
