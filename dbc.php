@@ -30,21 +30,23 @@ function dbc()
  * ファイルデータを保存
  * @param string $fileName ファイル名
  * @param string $savePath 保存先のパス
- * @param string $caption キャプション
+ * @param string $name お名前
+ * @param string $caption キャプション（一言メッセージ）
  * @return bool $result
  */
-function fileSave($fileName, $savePath, $caption)
+function fileSave($fileName, $savePath, $name, $caption)
 {
     $result = false;
 
-    $sql = "INSERT INTO file_table(file_name, file_path, caption)VALUES(?,?,?)";
+    $sql = "INSERT INTO file_table(file_name, file_path, name, caption)VALUES(?,?,?,?)";
 
     try {
         $stmt = dbc()->prepare($sql); //SQLの準備
 
         $stmt->bindValue(1, $fileName);
         $stmt->bindValue(2, $savePath);
-        $stmt->bindValue(3, $caption);
+        $stmt->bindValue(3, $name);
+        $stmt->bindValue(4, $caption);
 
         $result = $stmt->execute(); //SQL文を実行
         return $result;

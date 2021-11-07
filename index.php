@@ -62,23 +62,29 @@ $files = getAllFile();
     </div>
 
     <!-- ■ 投稿エリア -->
-    <!-- TODO: uyload.php のコードを参考に画像とテキストの入力フォームを作成する -->
     <section class="section">
         <div class="container">
+            <div class="alert alert-secondary" role="alert" id="post-area">
+                メッセージと写真を投稿してください
+            </div>
             <form enctype="multipart/form-data" action="./file_upload.php" method="POST">
+                <!-- お名前 -->
                 <div class="mb-3">
-                    <!-- <label for="exampleFormControlInput1" class="form-label">名前</label>
-                    <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="名前"> -->
+                    <h6>【お名前】</h6>
+                    <textarea name="name" placeholder="お名前（ニックネーム）" id="caption"></textarea>
+                </div>
+                <!-- 一言メッセージ -->
+                <div class="mb-3">
+                    <h6>【一言メッセージ】</h6>
+                    <textarea name="caption" placeholder="メッセージ（140文字以下）" id="caption"></textarea>
+                </div>
+                <!-- 画像 -->
+                <div class="mb-3">
+                    <h6>【画像選択】</h6>
                     <input type="hidden" name="MAX_FILE_SIZE" value="2097152" />
                     <input name="img" type="file" accept="image/*" />
                 </div>
-                <div class="mb-3">
-                    <!-- <label for="exampleFormControlTextarea1" class="form-label">新規投稿</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea> -->
-                    <textarea name="caption" placeholder="キャプション（140文字以下）" id="caption"></textarea>
-                </div>
                 <button type="submit" class="btn btn-primary">投稿する</button>
-                <!-- <input type="submit" value="送信" class="btn" /> -->
             </form>
         </div>
     </section>
@@ -86,29 +92,22 @@ $files = getAllFile();
     <!-- ■ 投稿一覧エリア -->
     <section class="section">
         <div class="container">
-            <!-- TODO: データベース取得した投稿件数でループ -->
-            <?php foreach ($files as $file): ?>
-
-            <!-- Media object -->
-            <div class="d-flex">
-                <!-- 投稿画像 -->
-                <!-- TODO: データベース取得した画像パスに修正 -->
-                <img src="<?php echo "{$file['file_path']}"; ?>" alt="John Doe" class="me-3 rounded-circle"
-                    style="width: 60px; height: 60px;" />
-                <!-- タイトル＆本文 -->
-                <div>
-                    <!-- <h5 class="fw-bold">
-                        ワンちゃんに癒やされた一日。。。（投稿タイトル）
-                        <small class="text-muted">2021-10-03</small>
-                    </h5> -->
-                    <h5>田中太郎</h5>
-                    <p>
-                        <?php echo h("{$file['caption']}"); ?>
-                    </p>
-                </div>
+            <div class="alert alert-primary" role="alert" id="post-list">
+                投稿一覧
             </div>
-
-            <?php endforeach;?>
+            <div class="row">
+                <?php foreach ($files as $file): ?>
+                <div class="col-3 mb-3">
+                    <div class="card">
+                        <img src="<?php echo "{$file['file_path']}"; ?>" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <p class="card-text"><?php echo h("{$file['caption']}"); ?></p>
+                        </div>
+                    </div>
+                    <span class="badge bg-secondary"><?php echo h("{$file['name']}"); ?></span>
+                </div>
+                <?php endforeach;?>
+            </div>
         </div>
     </section>
 
